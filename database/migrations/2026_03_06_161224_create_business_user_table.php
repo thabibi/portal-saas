@@ -21,7 +21,7 @@ return new class extends Migration
                     ->constrained()
                     ->cascadeOnDelete();
             
-            $table->string('role')->default('owner');
+            $table->string('role')->default('operator');
             
             $table->timestamps();
         });
@@ -32,6 +32,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('business_user');
+        Schema::table('business_user', function (Blueprint $table) {
+            $table->dropColumn('role');
+        });
     }
 };

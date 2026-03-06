@@ -15,10 +15,15 @@ class BusinessUserSeeder extends Seeder
     {
         $user = User::first();
 
-        $user->businesses()->attach([
-            1,
-            2,
-            3
+        $user->businesses()->attach(1,[ 'role' => 'owner'
+            
+        ]);
+
+        $user->businesses()->attach(2,[ 'role' => 'admin'
+        ]);
+
+        $user2 = User::find(2);
+        $user2->businesses()->attach(1, [ 'role' => 'operator'
         ]);
     }
 }

@@ -13,15 +13,15 @@ class BusinessSeeder extends Seeder
      */
     public function run(): void
     {
-        Business :: create([
+        Business::create([
             'name' => 'Toko A'
         ]);
 
-        Business :: create ([
+        Business::create ([
             'name' => 'Toko Sembako'
         ]);
 
-        Business :: create ([
+        Business::create ([
             'name' => 'Toko Elektronik'
         ]);
     }

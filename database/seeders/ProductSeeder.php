@@ -13,19 +13,19 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        Product :: create([
+        Product::create([
             'name' => 'Beras',
             'price' => '12000',
             'business_id' => 1
         ]);
 
-        Product :: create([
+        Product::create([
             'name' => 'TV',
             'price' => '2500000',
             'business_id' =>1
         ]);
 
-        Product :: create ([
+        Product::create ([
             'name' => 'Minyak Goreng',
             'price' => 18000,
             'business_id' =>2
