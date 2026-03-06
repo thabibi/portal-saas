@@ -13,10 +13,16 @@ class Product extends Model
     protected static function booted()
     {
         static::addGlobalScope('business', function (Builder $builder){
-            if (BusinessContext::get()) {
-                $builder->where('business_id', BusinessContext::get());
+            $businessId = BusinessContext::get();
+            if ($businessId){
+                $builder->where('business_id', $businessId);
             }
+            
         
+        });
+
+        static::creating(function ($product){
+            $product->business_id = BusinessContext::get();
         });
     }
 
