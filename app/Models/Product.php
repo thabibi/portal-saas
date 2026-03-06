@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use App\Helpers\BusinessContext;
 
 class Product extends Model
 {
@@ -11,12 +12,14 @@ class Product extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope('business', function (Builder $builder) {
-            if (session()->has('business_id')) {
-                $builder->where('business_id', session('business_id'));
+        static::addGlobalScope('business', function (Builder $builder){
+            if (BusinessContext::get()) {
+                $builder->where('business_id', BusinessContext::get());
             }
+        
         });
     }
+
 
     public function business()
     {

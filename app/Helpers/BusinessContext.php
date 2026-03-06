@@ -4,13 +4,15 @@ namespace App\Helpers;
 
 class BusinessContext
 {
-    public static function id()
+
+    public static function set($businessId)
+    {
+        session(['business_id' => $businessId]);
+    }
+
+    public static function get()
     {
         return session('business_id');
     }
 
-    public static function has()
-    {
-        return session()->has('business_id');
-    }
 }
