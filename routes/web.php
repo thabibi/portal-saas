@@ -8,7 +8,9 @@ use App\Models\Business;
 //Menampilkan daftar bisnis yang dipiih user
 Route::get('/select-business', function (){
     $businesses = Business::all();
-    return "Halaman Pilih Bisnis";
+    return view('business.select', [
+        'businesses' => $businesses
+    ]);
 
 })->name('business.select');
 
@@ -17,13 +19,13 @@ Route::post('/select-business/{id}', function ($id){
     BusinessContext::set($id);
     return redirect('/dashboard');
 
-})->name('busines.set');
+})->name('business.set');
 
 Route::middleware(['business.selected'])->group(function () {
     Route::get('/dashboard', function () {
-        $businessId = \App\Helpers\BusinessContext::get();
+        $businessId = BusinessContext::get();
 
-        return "Dashboard Business";
+        return "Dashboard Business ID : ".$businessId;
     });
 });
 
