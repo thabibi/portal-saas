@@ -10,6 +10,8 @@ class Business extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class)
+                    ->withPivot('role')
+                    ->withTimestamps();
     }
 }

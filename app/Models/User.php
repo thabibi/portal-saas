@@ -49,4 +49,12 @@ class User extends Authenticatable
     {
     return $this->belongsTo(Business::class);
     }
+
+    public function businesses()
+    {
+        //ini untuk relasi tabel many to many antara user dan tabel bisnis
+        return $this->belongsToMany(Business::class)
+                ->withPivot('role')
+                ->withTimestamps();
+    }
 }
