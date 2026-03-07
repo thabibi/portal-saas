@@ -87,6 +87,18 @@ Route::middleware(['auth', 'business.selected', 'role:operator'])->group(functio
     });
 });
 
+//Cara Penggunaan Route untuk Multi Role (Admin + Owner)
+Route::middleware(['auth', 'business.selected', 'role:owner,admin'])->group(function ()
+{
+    //
+});
+
+//Cara Penggunaan Route untuk Multi Role (Admin + Owner +Operator)
+Route::middleware(['auth', 'business.selected', 'role:owner,admin,operator'])->group(function ()
+{
+    //
+});
+
 /*
 |--------------------------------------------------------------------------
 | Home

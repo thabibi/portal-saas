@@ -15,10 +15,10 @@ class RoleMiddlewre
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role )
+    public function handle(Request $request, Closure $next, $roles )
     {
         $userRole = BusinessContext::role();
-            if ($userRole !== $role) {
+            if (!in_array($userRole, $roles)){
                 abort(403, 'Unauthorized');
             }
 
