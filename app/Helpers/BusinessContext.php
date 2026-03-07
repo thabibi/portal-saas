@@ -33,4 +33,15 @@ class BusinessContext
             return $business ? $business->pivot->role : null;
     }
 
+    public static function hasPermission($permission)
+    {
+        $role = self::role();
+
+        return \DB::table('role_permissions')
+                ->join('permissions', 'permissions.id', '=', 'role_permissions.permission_id')
+                ->where('role_permissions.role', $role)
+                ->where('permissions.name', $permission)
+                ->exist();
+    }
+
 }
