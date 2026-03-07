@@ -36,6 +36,7 @@ Route::post('/select-business/{id}', function ($id) {
 |--------------------------------------------------------------------------
 */
 
+//Route Untuk Testing Dashboard tanpa login
 Route::middleware(['business.selected'])->group(function () {
 
     Route::get('/dashboard', function () {
@@ -48,6 +49,43 @@ Route::middleware(['business.selected'])->group(function () {
 
 });
 
+
+//Route Untuk Semua Role (wajib Login)
+//Route::middleware(['auth','business.selected'])->group(function () {
+
+  //  Route::get('/dashboard', function () {
+
+    //    $businessId = BusinessContext::get();
+
+      //  return "Dashboard Business ID : " . $businessId;
+
+  //  })->name('dashboard');
+
+//});
+
+//Route Untuk Role Owner
+Route::middleware(['auth', 'business.selected', 'role:owner'])->group(function ()
+{
+    Route::get('/business/settings', function (){
+        return "Owner Setting";
+    });
+});
+
+//Route Untuk Role Admin
+Route::middleware(['auth', 'business.selected', 'role:admin'])->group(function ()
+{
+    Route::get('/products', function (){
+        return "Product Management";
+    });
+});
+
+//Route Untuk Role Operator
+Route::middleware(['auth', 'business.selected', 'role:operator'])->group(function ()
+{
+    Route::get('/pos', function (){
+        return "Pos Kasir";
+    });
+});
 
 /*
 |--------------------------------------------------------------------------
