@@ -6,6 +6,7 @@ use App\Helpers\BusinessContext;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middleware\BusinessSelected;
+use App\Http\Controllers\BusinessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,36 +33,19 @@ Route::middleware('auth')->group(function () {
     |---------------------------------------
     */
 
-    Route::get('/business/select', function () {
+    Route::get('/business/select', [BusinessController::class, 'select'])
+            ->name('business.select');
 
-        $businesses = Auth::user()->businesses;
-        return view('business.select', compact('businesses'));
-
-    })->name('business.select');
-
-
-    /*
-    |---------------------------------------
-    | Switch Business
-    |---------------------------------------
-    */
-
-    Route::get('/business/switch/{business}', function ($businessId) {
-
-        session(['business_id' => $businessId]);
-
-        return redirect()->route('products.index');
-
-    })->name('business.switch');
-
+    Route::get('/business/switch/{business}', [BusinessController::class, 'switch'])
+            ->name('business.switch');
 });
 
 
 /*
 |--------------------------------------------------------------------------
-| Business Context Routes
+| Business Area
 |--------------------------------------------------------------------------
-| Semua module SaaS berada disini
+| 
 |--------------------------------------------------------------------------
 */
 
