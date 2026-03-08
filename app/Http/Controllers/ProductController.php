@@ -11,10 +11,19 @@ use App\Http\Controllers\ProductController;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-       
-        $products = Product::latest()->get();
+        $search = $request->input('search', '');
+        
+        $products = Product::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+                ->latest()
+                ->paginate(10)
+                ->withQueryString();
+
+        //products = Product::latest()->get();
 
         return view('products.index', compact('products'));
     }
