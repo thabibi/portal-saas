@@ -1,25 +1,77 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Helpers\BusinessContext;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
+
+/*
+|--------------------------------------------------------------------------
+| Public
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth'])->group(function () {
+
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')->group(function () {
+
+    /*
+    |---------------------------------------
+    | Business Selection
+    |---------------------------------------
+    */
+
     Route::get('/business/select', function () {
-        //nilai kembali pada variabel business\select.blade.php
-        //dd(Auth::id(), Auth::user()->businesses);
+
         $businesses = Auth::user()->businesses;
 
-        return view('business.select', compact ('businesses'));
+        return view('business.select', compact('businesses'));
+
     })->name('business.select');
-    
+
+
+    /*
+    |---------------------------------------
+    | Switch Business
+    |---------------------------------------
+    */
+
+    Route::get('/business/switch/{business}', function ($businessId) {
+
+        session(['business_id' => $businessId]);
+
+        return redirect()->route('products.index');
+
+    })->name('business.switch')->middleware('auth');
+
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Business Context Routes
+|--------------------------------------------------------------------------
+| Semua module SaaS berada disini
+|--------------------------------------------------------------------------
+*/
+
 Route::middleware(['auth','business.selected'])->group(function () {
+
+    /*
+    |---------------------------------------
+    | Dashboard
+    |---------------------------------------
+    */
 
     Route::get('/dashboard', function () {
 
@@ -29,10 +81,27 @@ Route::middleware(['auth','business.selected'])->group(function () {
 
     })->name('dashboard');
 
+
+    /*
+    |---------------------------------------
+    | Products Module
+    |---------------------------------------
+    */
+
+    Route::resource('products', ProductController::class);
+
+
+    /*
+    |---------------------------------------
+    | Profile
+    |---------------------------------------
+    */
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 });
+
 
 require __DIR__.'/auth.php';

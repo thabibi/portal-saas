@@ -12,20 +12,19 @@ class Product extends Model
     protected $fillable = [
         'business_id', 
         'name', 
-        'price'
+        'price',
+        'stock'
         ];
 
     protected static function booted()
     {   //Global scope untuk auto filter business
-
-        static::addGlobalScope(new BusinessScope);
-
-        //Auto isi business_id saat creat
-
-        static::creating(function ($product) {
-            $product->business_id = BusinessContext::get();
+        static::addGlobalScope('business', function(Builder $builder) {
+            if (session('business_id')) {
+                $builder->where('business_id', session('business_id'));
+            }
         });
     }
+       
 
         public function business()
         {

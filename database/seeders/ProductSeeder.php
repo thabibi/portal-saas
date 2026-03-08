@@ -16,19 +16,22 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => 'Beras',
             'price' => '12000',
-            'business_id' => 1
+            'business_id' => 1,
+            'stock' =>5
         ]);
 
         Product::create([
             'name' => 'TV',
             'price' => '2500000',
-            'business_id' =>1
+            'business_id' =>1,
+            'stock' => 5
         ]);
 
         Product::create ([
             'name' => 'Minyak Goreng',
             'price' => 18000,
-            'business_id' =>2
+            'business_id' =>2,
+            'stock' =>5
         ]);
 
     }

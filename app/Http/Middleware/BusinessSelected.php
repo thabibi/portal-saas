@@ -10,6 +10,7 @@ class BusinessSelected
 {
     public function handle(Request $request, Closure $next)
     {
+        dd(session('business_id'));
         if (!BusinessContext::get()) {
             return redirect('/business/select');
         }

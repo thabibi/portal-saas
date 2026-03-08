@@ -1,12 +1,21 @@
-<h2>Pilih Bisnis</h2>
+<x-app-layout>
 
-@foreach ($businesses as $business)
+    <h2 class="text-xl font-bold mb-4">
+        Pilih Business
+    </h2>
 
-<form method="POST" action="/select-business/{{ $business->id }}">
-    @csrf
-    <button type="submit">
-        {{ $business->name }}
-    </button>
-</form>
+    <ul>
+        @foreach($businesses as $business)
 
-@endforeach
+            <li class="mb-2">
+
+                <a href="{{ route('business.switch', $business->id) }}">
+                    {{ $business->name }} (ID: {{ $business->id }})
+                </a>
+
+            </li>
+
+        @endforeach
+    </ul>
+
+</x-app-layout>
