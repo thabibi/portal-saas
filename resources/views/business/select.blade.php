@@ -19,8 +19,7 @@
 
                     @foreach($businesses as $business)
                         <div class="border rounded-lg p-5 hover:shadow-lg transition-shadow duration-300">
-                            <form method="POST" action="/select-business/{{ $business->id }}">
-                                @csrf
+                            <form method="GET" action="{{route('business.switch',$business)}}">
                                 <button type="submit" class="w-full text-left">
                                     <h4 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-2">
                                         🏪 {{ $business->name }}

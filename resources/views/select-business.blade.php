@@ -10,7 +10,7 @@
             <li class="mb-2">
 
                 <a href="{{ route('business.switch', $business->id) }}">
-                    {{ $business->name }} (ID: {{ $business->id }})
+                    {{ $business->name }} 
                 </a>
 
             </li>

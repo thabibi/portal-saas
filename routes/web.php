@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Helpers\BusinessContext;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Middleware\BusinessSelected;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/business/select', function () {
 
         $businesses = Auth::user()->businesses;
-
         return view('business.select', compact('businesses'));
 
     })->name('business.select');
@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
 
         return redirect()->route('products.index');
 
-    })->name('business.switch')->middleware('auth');
+    })->name('business.switch');
 
 });
 
